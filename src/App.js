@@ -3,6 +3,7 @@ import { If, Then, Else } from 'react-if'
 
 const logo = '//d2t498vi8pate3.cloudfront.net/assets/home-header-logo-8d37f4195730352f0055d39f7e88df602e2d67bdab1000ac5886c5a492400c9d.png';
 import './App.css';
+import TextField from './TextField'
 
 class App extends Component {
   constructor() {
@@ -22,6 +23,8 @@ class App extends Component {
 
     this.handleCorrectPassageChange = this.handleCorrectPassageChange.bind(this)
     this.handleCorrectPassageSubmit = this.handleCorrectPassageSubmit.bind(this)
+    this.handleErrorPassageChange = this.handleErrorPassageChange.bind(this)
+    this.handleErrorPassageSubmit = this.handleErrorPassageSubmit.bind(this)
 
   }
 
@@ -33,7 +36,19 @@ class App extends Component {
     this.setState({
       stageOneEnabled: false,
       stageTwoEnabled: true,
-      stageTwoEnabled: true
+      stageTwoVisible: true
+    })
+  }
+
+  handleErrorPassageChange(event) {
+    this.setState({ errorPassage: event.target.value })
+  }
+
+  handleErrorPassageSubmit(event) {
+    this.setState({
+      stageTwoEnabled: false,
+      stageThreeEnabled: true,
+      stageThreeVisible: true
     })
   }
 
@@ -46,32 +61,29 @@ class App extends Component {
         </div>
 
         <div className="interface">
-          <If condition={ this.state.stageOneVisible }>
+          <If condition={this.state.stageOneVisible}>
             <Then>
-              <If condition={ this.state.stageOneEnabled }>
-                <Then>
-                  <div className="stageOne">
-                    <textarea
-                      placeholder="Write passage here..."
-                      value={ this.state.correctPassage }
-                      onChange={ this.handleCorrectPassageChange }
-                    ></textarea>
-                    <button
-                      onClick={ this.handleCorrectPassageSubmit }
-                    >
-                      Next
-                    </button>
-                  </div>
-                </Then>
-              <Else>
-                <div className="stageOne">
-                  <textarea disabled
-                    value={ this.state.correctPassage }
-                  ></textarea>
-                  <button disabled>Next</button>
-                </div>
-              </Else>
-              </If>
+              <TextField
+                className="stageOne"
+                enabled={this.state.stageOneEnabled}
+                placeholder="Write passage here..."
+                value={this.state.correctPassage}
+                onChange={this.handleCorrectPassageChange}
+                onClick={this.handleCorrectPassageSubmit}
+              />
+            </Then>
+          </If>
+
+          <If condition={this.state.stageTwoVisible}>
+            <Then>
+              <TextField
+                className="stageTwo"
+                enabled={this.state.stageTwoEnabled}
+                defaultValue={this.state.correctPassage}
+                onChange={this.handleErrorPassageChange}
+                onClick={this.handleErrorPassageSubmit}
+                text={this.state.errorPassage}
+              />
             </Then>
           </If>
         </div>
