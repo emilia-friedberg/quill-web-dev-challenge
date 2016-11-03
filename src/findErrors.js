@@ -7,7 +7,7 @@ module.exports = function findErrors(correctPassage, errorPassage) {
   for (let i=0; i < correctPassageArray.length; i++ ) {
     console.log(errorPassageArray[1])
     if (correctPassageArray[i] !== errorPassageArray[i]) {
-      errors.push(correctPassageArray[i] + "/" + errorPassageArray[i])
+      errors.push(correctPassageArray[i] + " / " + errorPassageArray[i])
     }
   }
 

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { If, Then, Else } from 'react-if'
+import { If, Then } from 'react-if'
 
 const logo = '//d2t498vi8pate3.cloudfront.net/assets/home-header-logo-8d37f4195730352f0055d39f7e88df602e2d67bdab1000ac5886c5a492400c9d.png';
 import './App.css';
+import Error from './Error'
 import TextField from './TextField'
 import findErrors from './findErrors'
 
@@ -63,36 +64,44 @@ class App extends Component {
         </div>
 
         <div className="interface">
-          <If condition={this.state.stageOneVisible}>
-            <Then>
-              <TextField
-                className="stageOne"
-                enabled={this.state.stageOneEnabled}
-                placeholder="Write passage here..."
-                value={this.state.correctPassage}
-                onChange={this.handleCorrectPassageChange}
-                onClick={this.handleCorrectPassageSubmit}
-              />
-            </Then>
-          </If>
+          <div className="passages-container">
+            <If condition={this.state.stageOneVisible}>
+              <Then>
+                <TextField
+                  className="stage-one"
+                  enabled={this.state.stageOneEnabled}
+                  heading="Grammatically Correct Passage"
+                  placeholder="Write passage here..."
+                  value={this.state.correctPassage}
+                  onChange={this.handleCorrectPassageChange}
+                  onClick={this.handleCorrectPassageSubmit}
+                />
+              </Then>
+            </If>
 
-          <If condition={this.state.stageTwoVisible}>
-            <Then>
-              <TextField
-                className="stageTwo"
-                enabled={this.state.stageTwoEnabled}
-                defaultValue={this.state.correctPassage}
-                onChange={this.handleErrorPassageChange}
-                onClick={this.handleErrorPassageSubmit}
-                text={this.state.errorPassage}
-              />
-            </Then>
-          </If>
+            <If condition={this.state.stageTwoVisible}>
+              <Then>
+                <TextField
+                  className="stage-two"
+                  enabled={this.state.stageTwoEnabled}
+                  defaultValue={this.state.correctPassage}
+                  heading="Passage With Grammatical Errors"
+                  onChange={this.handleErrorPassageChange}
+                  onClick={this.handleErrorPassageSubmit}
+                  text={this.state.errorPassage}
+                />
+              </Then>
+            </If>
+          </div>
 
           <If condition={this.state.stageThreeVisible}>
             <Then>
-              <div className="stageThree">
-                <ul className"errors">
+              <div className="stage-three">
+                <p>Assign Grammatical Errors</p>
+                <ul className="errors">
+                  {this.state.errors.map(function(error, i) {
+                    return <Error error={error} key={i} />
+                  })}
                 </ul>
               </div>
             </Then>
