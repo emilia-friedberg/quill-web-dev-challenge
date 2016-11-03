@@ -4,6 +4,7 @@ import { If, Then, Else } from 'react-if'
 const logo = '//d2t498vi8pate3.cloudfront.net/assets/home-header-logo-8d37f4195730352f0055d39f7e88df602e2d67bdab1000ac5886c5a492400c9d.png';
 import './App.css';
 import TextField from './TextField'
+import findErrors from './findErrors'
 
 class App extends Component {
   constructor() {
@@ -46,6 +47,7 @@ class App extends Component {
 
   handleErrorPassageSubmit(event) {
     this.setState({
+      errors: findErrors(this.state.correctPassage, this.state.errorPassage),
       stageTwoEnabled: false,
       stageThreeEnabled: true,
       stageThreeVisible: true
@@ -84,6 +86,15 @@ class App extends Component {
                 onClick={this.handleErrorPassageSubmit}
                 text={this.state.errorPassage}
               />
+            </Then>
+          </If>
+
+          <If condition={this.state.stageThreeVisible}>
+            <Then>
+              <div className="stageThree">
+                <ul className"errors">
+                </ul>
+              </div>
             </Then>
           </If>
         </div>
