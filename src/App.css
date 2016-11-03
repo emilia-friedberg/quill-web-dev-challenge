@@ -20,3 +20,37 @@ body {
 .App-intro {
   font-size: large;
 }
+
+.interface {
+  width: 80%;
+  margin: auto;
+  margin-top: 30px;
+  /*text-align: left;*/
+}
+
+.passages-container {
+  margin: auto;
+}
+
+.passage {
+  width: 300px;
+  height: 200px;
+}
+
+.stage-one, .stage-two {
+  float: left;
+  width: 45%
+}
+
+.stage-three {
+  margin-top: 30px;
+  width: 80%
+}
+
+.stage-three ul {
+  list-style-type: none;
+}
+
+.stage-heading {
+  margin-right: 30px
+}
