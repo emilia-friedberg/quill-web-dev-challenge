@@ -5,11 +5,11 @@ class Error extends Component {
     return (
       <li>
         {this.props.error}
-        <select>
+        <select onChange={this.props.onChange} name={this.props.error}>
           <option disabled selected hidden>Select Option</option>
-          <option>Articles</option>
-          <option>Commas</option>
-          <option>Proper Nouns</option>
+          <option value="Articles">Articles</option>
+          <option value="Commas">Commas</option>
+          <option value="Proper Nouns">Proper Nouns</option>
         </select>
       </li>
     )

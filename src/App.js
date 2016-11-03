@@ -15,6 +15,7 @@ class App extends Component {
       correctPassage: '',
       errorPassage: '',
       errors: [],
+      errorsWithConcepts: {},
       stageOneEnabled: true,
       stageOneVisible: true,
       stageTwoEnabled: false,
@@ -27,7 +28,7 @@ class App extends Component {
     this.handleCorrectPassageSubmit = this.handleCorrectPassageSubmit.bind(this)
     this.handleErrorPassageChange = this.handleErrorPassageChange.bind(this)
     this.handleErrorPassageSubmit = this.handleErrorPassageSubmit.bind(this)
-
+    this.handleErrorAssignment = this.handleErrorAssignment.bind(this)
   }
 
   handleCorrectPassageChange(event) {
@@ -52,6 +53,12 @@ class App extends Component {
       stageTwoEnabled: false,
       stageThreeEnabled: true,
       stageThreeVisible: true
+    })
+  }
+
+  handleErrorAssignment(event) {
+    this.setState({
+      errorsWithConcepts: {...this.state.errorsWithConcepts, [event.target.name]: event.target.value }
     })
   }
 
@@ -97,12 +104,17 @@ class App extends Component {
           <If condition={this.state.stageThreeVisible}>
             <Then>
               <div className="stage-three">
-                <p>Assign Grammatical Errors</p>
+                <p>Grammatical Error Assignment</p>
                 <ul className="errors">
-                  {this.state.errors.map(function(error, i) {
-                    return <Error error={error} key={i} />
+                  {this.state.errors.map((error, i) => {
+                    return <Error
+                      onChange={this.handleErrorAssignment}
+                      error={error}
+                      key={i}
+                    />
                   })}
                 </ul>
+                <button>Done</button>
               </div>
             </Then>
           </If>
