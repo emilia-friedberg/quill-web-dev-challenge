@@ -29,6 +29,7 @@ class App extends Component {
     this.handleErrorPassageChange = this.handleErrorPassageChange.bind(this)
     this.handleErrorPassageSubmit = this.handleErrorPassageSubmit.bind(this)
     this.handleErrorAssignment = this.handleErrorAssignment.bind(this)
+    this.handleCompletion = this.handleCompletion.bind(this)
   }
 
   handleCorrectPassageChange(event) {
@@ -59,6 +60,12 @@ class App extends Component {
   handleErrorAssignment(event) {
     this.setState({
       errorsWithConcepts: {...this.state.errorsWithConcepts, [event.target.name]: event.target.value }
+    })
+  }
+
+  handleCompletion(event) {
+    this.setState({
+      stageThreeEnabled: false
     })
   }
 
@@ -108,13 +115,16 @@ class App extends Component {
                 <ul className="errors">
                   {this.state.errors.map((error, i) => {
                     return <Error
+                      enabled={this.stageThreeEnabled}
                       onChange={this.handleErrorAssignment}
                       error={error}
                       key={i}
                     />
                   })}
                 </ul>
-                <button>Done</button>
+                <If condition={this.state.stageThreeEnabled}>
+                  <button onClick={this.handleCompletion}>Done</button>
+                </If>
               </div>
             </Then>
           </If>
