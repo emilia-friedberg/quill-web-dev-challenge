@@ -7,7 +7,7 @@ class TextField extends Component {
         <If condition={this.props.enabled} >
           <Then>
             <div className={this.props.className}>
-            <p className="stage-heading">{this.props.heading }</p>
+            <p className="stage-heading">{this.props.heading}</p>
               <textarea
                 className="passage"
                 placeholder={this.props.placeholder}

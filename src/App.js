@@ -102,7 +102,6 @@ class App extends Component {
         </If>
 
         <div className="interface">
-          <div className="passages-container">
             <If condition={this.state.stageOneVisible}>
               <Then>
                 <TextField
@@ -130,12 +129,11 @@ class App extends Component {
                 />
               </Then>
             </If>
-          </div>
 
           <If condition={this.state.stageThreeVisible}>
             <Then>
               <div className="stage-three">
-                <p>Grammatical Error Assignment</p>
+                <p className="stage-heading">Grammatical Error Assignment</p>
                 <ul className="errors">
                   {this.state.errors.map((error, i) => {
                     const savedConcept = this.state.errorsWithConcepts[error]

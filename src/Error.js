@@ -6,9 +6,9 @@ class Error extends Component {
     return (
       <If condition={this.props.enabled}>
         <Then>
-          <li>
-            {this.props.error}
-            <select onChange={this.props.onChange} name={this.props.error}>
+          <li className="error">
+            <p className="error-text">{this.props.error}</p>
+            <select className="error-options" onChange={this.props.onChange} name={this.props.error}>
               <option disabled selected hidden>Select Option</option>
               <option value="Articles">Articles</option>
               <option value="Commas">Commas</option>
