@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { If, Then } from 'react-if'
+import { If, Else, Then } from 'react-if'
 
 const logo = '//d2t498vi8pate3.cloudfront.net/assets/home-header-logo-8d37f4195730352f0055d39f7e88df602e2d67bdab1000ac5886c5a492400c9d.png';
 import './App.css';
@@ -21,7 +21,8 @@ class App extends Component {
       stageTwoEnabled: false,
       stageTwoVisible: false,
       stageThreeEnabled: false,
-      stageThreeVisible: false
+      stageThreeVisible: false,
+      notifications: []
     }
 
     this.handleCorrectPassageChange = this.handleCorrectPassageChange.bind(this)
@@ -37,11 +38,16 @@ class App extends Component {
   }
 
   handleCorrectPassageSubmit(event) {
-    this.setState({
-      stageOneEnabled: false,
-      stageTwoEnabled: true,
-      stageTwoVisible: true
-    })
+    if (this.state.correctPassage) {
+      this.setState({
+        stageOneEnabled: false,
+        stageTwoEnabled: true,
+        stageTwoVisible: true,
+        notifications: []
+      })
+    } else {
+      this.setState({notifications: ["Please enter a grammatically correct passage."]})
+    }
   }
 
   handleErrorPassageChange(event) {
@@ -49,12 +55,19 @@ class App extends Component {
   }
 
   handleErrorPassageSubmit(event) {
-    this.setState({
-      errors: findErrors(this.state.correctPassage, this.state.errorPassage),
-      stageTwoEnabled: false,
-      stageThreeEnabled: true,
-      stageThreeVisible: true
-    })
+    if (this.state.errorPassage && (this.state.errorPassage !== this.state.correctPassage)) {
+      this.setState({
+        errors: findErrors(this.state.correctPassage, this.state.errorPassage),
+        stageTwoEnabled: false,
+        stageThreeEnabled: true,
+        stageThreeVisible: true,
+        notifications: []
+      })
+    } else {
+      this.setState({
+        notifications: ["Please add grammatical errors to this passage."]
+      })
+    }
   }
 
   handleErrorAssignment(event) {
@@ -65,7 +78,8 @@ class App extends Component {
 
   handleCompletion(event) {
     this.setState({
-      stageThreeEnabled: false
+      stageThreeEnabled: false,
+      notifications: ["You're all done!"]
     })
   }
 
@@ -76,6 +90,16 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to the Quill Web Dev Challenge</h2>
         </div>
+
+        <If condition={this.state.notifications}>
+          <Then>
+            <ul className="notifications">
+              {this.state.notifications.map((notification, i) => {
+                return <li key={i}>{notification}</li>
+              })}
+            </ul>
+          </Then>
+        </If>
 
         <div className="interface">
           <div className="passages-container">
@@ -114,16 +138,19 @@ class App extends Component {
                 <p>Grammatical Error Assignment</p>
                 <ul className="errors">
                   {this.state.errors.map((error, i) => {
+                    const savedConcept = this.state.errorsWithConcepts[error]
                     return <Error
-                      enabled={this.stageThreeEnabled}
+                      enabled={this.state.stageThreeEnabled}
                       onChange={this.handleErrorAssignment}
                       error={error}
                       key={i}
+                      savedValue={savedConcept}
                     />
                   })}
                 </ul>
                 <If condition={this.state.stageThreeEnabled}>
-                  <button onClick={this.handleCompletion}>Done</button>
+                  <Then><button onClick={this.handleCompletion}>Done</button></Then>
+                  <Else><button disabled>Done</button></Else>
                 </If>
               </div>
             </Then>

@@ -3,15 +3,7 @@ module.exports = function findErrors(correctPassage, errorPassage) {
   const errorPassageArray = errorPassage.split(' ')
   const errors = []
 
-// this treats each word that ends in a comma as a separate error
-  // for (let i=0; i < correctPassageArray.length; i++ ) {
-  //   console.log(errorPassageArray[1])
-  //   if (correctPassageArray[i] !== errorPassageArray[i]) {
-  //     errors.push(correctPassageArray[i] + " / " + errorPassageArray[i])
-  //   }
-  // }
-
-  // this treats each sequence of words that have a comma after them as one error
+  // this treats each list of single words separated by a comma as one error
   for (let i=0; i < correctPassageArray.length; i++ ) {
 
     if (correctPassageArray[i] !== errorPassageArray[i]) {
